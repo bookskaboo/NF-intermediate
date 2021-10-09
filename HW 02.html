@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+    var testlist = [1,1,2,3,1,2,"apple","pink","apple","apple","apple"];
+    
+    document.getElementById("list").innerHTML = testlist;
+    document.getElementById("output").innerHTML = hi_frequent(testlist);
+
+}
+
+function hi_frequent(inputlist)
+{
+    //define object 
+    //make an array of values, with inputlist[i] being id, and freq the number of times it occurs
+    let list = []; 
+    for(let i=0; i < inputlist.length; i++)
+    {
+        let existsinlist = false;
+        //check to see if inputlist[i] exists in the list
+        for(let j=0; j < list.length; j++)
+        {             
+            //if the input value exists in the list, increment freq by 1
+            if(inputlist[i] == list[j].id)
+            {
+                existsinlist = true;
+                list[j].freq++;
+                break;
+            }
+        }
+        //adds the value and frequency to the list if it doesn't exist in list
+        if(!existsinlist)
+        {
+            list.push({id:inputlist[i], freq:1})          
+        }         
+        console.log(list)      
+    }
+    //find the highest frequency in the list, and then return that value
+    let maxfreq = 0; 
+    let value = 0; 
+    for(let i=0; i < list.length; i++)
+    {
+        if(list[i].freq >= maxfreq)
+        {
+            value = list[i].id
+            maxfreq = list[i].freq
+            console.log(value +", "+ maxfreq)
+        }
+    }
+    //return the value of the highest frequency
+    return value;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework I-1<br><br>
+Write a function that returns the most common item in an array of only numbers.<br><br>
+
+<div id="list"></div><br>
+<div id="output"></div>
+</body>
+</html>
