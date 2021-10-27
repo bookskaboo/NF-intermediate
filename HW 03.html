@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+    let corvette = new Car();
+    document.getElementById("gas").innerHTML = corvette.gas;
+    document.getElementById("fill").onclick = function()
+    {
+        corvette.fill(document.getElementById("inputgas").value);
+        document.getElementById("gas").innerHTML = corvette.gas;
+    }
+    document.getElementById("go").onclick = function()
+    {
+        document.getElementById("output").innerHTML = corvette.go();
+        document.getElementById("gas").innerHTML = corvette.gas;
+    }
+}
+
+function Car()
+{
+    this.gas = 0;
+}
+
+Car.prototype.go = function()
+{
+    if(this.gas != 0)
+    {
+        this.gas--;
+        return "Vroom Vroom";
+    } 
+    else return "Out of Gas :(";
+}
+
+Car.prototype.fill = function(gallons)
+{
+    this.gas = gallons; 
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework I-3<br><br>
+Make a Car class with gas field and prototype method "go" which prints "vroom vroom!" if you have gas left, reducing gas by 1. Otherwise it will print "Out of gas :(". Make a "refill" prototype method that takes in an integer of gas to refill, and adds that to your gas.
+<br><br>
+
+Current gas:<div id="gas"></div><br>
+<input type="number" id="inputgas"></input>
+<div id="fill">Fill</div>
+<div id="go">Go</div>
+<br><br> 
+<div id="output"></div>
+</body>
+</html>
