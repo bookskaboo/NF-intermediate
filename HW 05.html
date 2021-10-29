@@ -23,7 +23,16 @@ div:active {
 function myFunction()
 {
     let test = new LinkedList();
-
+    test.add(0);
+    test.add(1);
+    test.add(2);
+    test.add(3);
+    test.add(4);
+    test.add(5);
+    test.add(6);
+    test.add(7);
+    test.add(8);
+    test.add(9);
     test.delete(3);
     test.insert(3, 3);
     document.getElementById("output").innerHTML = test.print();
@@ -77,7 +86,7 @@ LinkedList.prototype.add = function(value)
 LinkedList.prototype.delete = function(search)
 {
     let tempNode = this.head;
-    if(search == 0 || this.head == null)    //delete the first node if asked to
+    if(search == 0)    //delete the first node if asked to
     {
         this.head = this.head.next;
         return;
