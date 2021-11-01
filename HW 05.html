@@ -22,7 +22,7 @@ div:active {
 <script>
 function myFunction()
 {
-    let test = new LinkedList();
+    let test = new ArrayList();
     test.add(0);
     test.add(1);
     test.add(2);
@@ -34,111 +34,81 @@ function myFunction()
     test.add(8);
     test.add(9);
     test.delete(3);
-    test.insert(3, 3);
+    test.insert(3,3);
     document.getElementById("output").innerHTML = test.print();
-    document.getElementById("get").innerHTML = test.get(2);
+    document.getElementById("get").innerHTML = test.get(3);
 }
 
-//make a list, with first node 
-function LinkedList()
+//make an empty array  
+function ArrayList()
 {
-    this.head = null;
+    this.end = 0; 
+    this.list = [];
 }
 
-function Node(value)
+ArrayList.prototype.print = function()
 {
-    this.value = value;
-    this.next = null;
-}
-
-LinkedList.prototype.print = function()
-{
-    let output = this.head.value + ", ";
-    let tempNode = this.head.next;
-    console.log(this.head.next)
- 
-    while(tempNode != null)
-    {
-        output += tempNode.value + ", ";
-        tempNode = tempNode.next;
-    }
+    let output = "";
+    for(let i = 0; i < this.end; i++)
+        output += this.get(i) + ", ";
     return output;
 }
 
-//returns a linked list with the new node with sent value at the end 
-LinkedList.prototype.add = function(value)
+ArrayList.prototype.enlarge = function()
 {
-    let newNode = new Node(value)
-    // if the list is empty, put the node at the head.  
-    if(this.head == null) 
-        this.head = newNode;
-    // set the temp list to the main list
-    else
-    {
-        let tempNode = this.head; 
-        while(tempNode.next != null)
-            tempNode = tempNode.next; 
-        tempNode.next = newNode;
-    }
+    let templist = new Array(this.end * 2);
+    for(let i = 0; i < this.end; i++)
+        templist[i] = this.list[i];
+    this.list = templist;  
+}
+
+//Adds a new value to end of arraylist
+ArrayList.prototype.add = function(value)
+{
+    this.end++;                                  
+    if(this.end >= this.list.length)             
+        this.enlarge();   
+    this.list[this.end-1] = value;
 }
 
 //deletes the node with sent value 
-LinkedList.prototype.delete = function(search)
+ArrayList.prototype.delete = function(search)
 {
-    let tempNode = this.head;
-    if(search == 0)    //delete the first node if asked to
+    if(search < 0 || search > this.end) return;
+    for(let i = search; i < this.end; i++)
     {
-        this.head = this.head.next;
-        return;
-    }   
-    for(let i = 0; i < search-1; i++)
-    {
-        if(tempNode == null) return; //return if invalid search index
-        tempNode = tempNode.next;
-    }   
-    
-    if(tempNode.next == null) return; //return if invalid search index
-    tempNode.next = tempNode.next.next;
+        this.list[i] = this.list[i+1]
+    }
+    this.end--;
 }
 
 //inserts the value at the search index, assuming first index is 0
-LinkedList.prototype.insert = function(search, value)
+ArrayList.prototype.insert = function(search, value)
 {
-    let tempNode = this.head;
-    let addNode = new Node(value);
-    if(search == 0) //inserting value at the head of the list
-    {
-        addNode.next = this.head;
-        this.head = addNode;
-        return;
+    if(search < 0 || search > this.end) return;
+    this.end++;                                  
+    if(this.end >= this.list.length)             
+        this.enlarge();  
+    for(let i = this.end; i > search; i--)
+    {    
+        this.list[i] = this.list[i-1];
+        console.log(i +","+ this.end)
+        console.log(this.list);
     }
-
-    for(let i = 0; i < search-1; i++)
-    {
-        if(tempNode == null) return; //return if invalid search index
-        tempNode = tempNode.next;
-    }
-    addNode.next = tempNode.next;
-    tempNode.next = addNode;
+    this.list[search] = value; 
 }
 
 //returns value at index search
-LinkedList.prototype.get = function(search)
+ArrayList.prototype.get = function(search)
 {
-    let tempNode = this.head;
-    for(let i = 0; i < search; i++)
-    {
-        if(tempNode == null) return; //return if invalid search index
-        tempNode = tempNode.next;
-    } 
-    return tempNode.value;
+    return this.list[search];
 }
 
 </script>
 </head>
 <body onload="myFunction()">
-Homework I-4<br><br>
-Make a LinkedList prototype class. This should include methods to add, delete at index, insert at index, and get at index. A linkedlist is a structure with nodes that have a reference to the next node in the list. Look up the concept.
+Homework I-5<br><br>
+Make an ArrayList prototype class. This should include methods to add, delete at index, insert at index, and get at index. An ArrayList is a structure with a resizing array that holds the values for the list. Look up the concept.
 <br><br>
 
 
