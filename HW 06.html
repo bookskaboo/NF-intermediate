@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+    let test = new LinkedList();
+
+    test.delete(3);
+    test.insert(3, 3);
+    document.getElementById("output").innerHTML = test.print();
+    document.getElementById("get").innerHTML = test.get(2);
+}
+
+//make a list, with first node 
+function LinkedList()
+{
+    this.head = null;
+}
+
+function Node(value)
+{
+    this.value = value;
+    this.next = null;
+}
+
+LinkedList.prototype.print = function()
+{
+    let output = this.head.value + ", ";
+    let tempNode = this.head.next;
+    console.log(this.head.next)
+ 
+    while(tempNode != null)
+    {
+        output += tempNode.value + ", ";
+        tempNode = tempNode.next;
+    }
+    return output;
+}
+
+//returns a linked list with the new node with sent value at the end 
+LinkedList.prototype.add = function(value)
+{
+    let newNode = new Node(value)
+    // if the list is empty, put the node at the head.  
+    if(this.head == null) 
+        this.head = newNode;
+    // set the temp list to the main list
+    else
+    {
+        let tempNode = this.head; 
+        while(tempNode.next != null)
+            tempNode = tempNode.next; 
+        tempNode.next = newNode;
+    }
+}
+
+//deletes the node with sent value 
+LinkedList.prototype.delete = function(search)
+{
+    let tempNode = this.head;
+    if(this.head == null) //return 
+    if(search == 0)    //delete the first node if asked to
+    {
+        this.head = this.head.next;
+        return;
+    }   
+    for(let i = 0; i < search-1; i++)
+    {
+        if(tempNode == null) return; //return if invalid search index
+        tempNode = tempNode.next;
+    }   
+    
+    if(tempNode.next == null) return; //return if invalid search index
+    tempNode.next = tempNode.next.next;
+}
+
+//inserts the value at the search index, assuming first index is 0
+LinkedList.prototype.insert = function(search, value)
+{
+    let tempNode = this.head;
+    let addNode = new Node(value);
+    if(search == 0) //inserting value at the head of the list
+    {
+        addNode.next = this.head;
+        this.head = addNode;
+        return;
+    }
+
+    for(let i = 0; i < search-1; i++)
+    {
+        if(tempNode == null) return; //return if invalid search index
+        tempNode = tempNode.next;
+    }
+    addNode.next = tempNode.next;
+    tempNode.next = addNode;
+}
+
+//returns value at index search
+LinkedList.prototype.get = function(search)
+{
+    let tempNode = this.head;
+    for(let i = 0; i < search; i++)
+    {
+        if(tempNode == null) return; //return if invalid search index
+        tempNode = tempNode.next;
+    } 
+    return tempNode.value;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework I-4<br><br>
+Make a LinkedList prototype class. This should include methods to add, delete at index, insert at index, and get at index. A linkedlist is a structure with nodes that have a reference to the next node in the list. Look up the concept.
+<br><br>
+
+
+<div id="output"></div><br>
+<div id="get"></div>
+</body>
+</html>
